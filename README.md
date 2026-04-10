@@ -5,7 +5,7 @@ Official [Homebrew](https://brew.sh) tap for [Huitzo](https://huitzo.ai) -- the 
 ## Install
 
 ```sh
-brew install huitzo/tap/huitzo
+brew install Huitzo-Inc/tap/huitzo
 ```
 
 After the first install, Homebrew remembers the tap. Future commands work with just the formula name:
@@ -50,7 +50,7 @@ brew update && brew upgrade huitzo
 
 **Tap not found:**
 ```sh
-brew tap huitzo/tap
+brew tap Huitzo-Inc/tap
 brew install huitzo
 ```
 
