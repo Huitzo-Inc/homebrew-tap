@@ -1,7 +1,7 @@
 class Huitzo < Formula
   desc "Huitzo CLI for developing Intelligence Packs"
   homepage "https://huitzo.ai"
-  version "0.1.0"
+  version "0.2.2"
   license :cannot_represent
 
   on_macos do
