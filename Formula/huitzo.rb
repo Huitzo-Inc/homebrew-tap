@@ -1,28 +1,28 @@
 class Huitzo < Formula
   desc "Huitzo CLI for developing Intelligence Packs"
   homepage "https://huitzo.ai"
-  version "0.2.4"
+  version "0.2.6"
   license :cannot_represent
 
   on_macos do
     on_arm do
       url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-apple-darwin"
-      sha256 "1f99d6c07f11c78e7a231ee5be1ec812f002569a803f946a64db0348e9a58d7a"
+      sha256 "480b06833fe8191eec40adea7a61f0f3dca795beec6870446ca832264b23ffa7"
     end
     on_intel do
       url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-x86_64-apple-darwin"
-      sha256 "04d72f747c87a03bf74cd0dd938511057ad6d8c360d3da3492251cb6cc7d2b2a"
+      sha256 "4eed47382a5e95fe07fc24c8c86eb8edd7488b6cd515da3c578f8cd316331d53"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-unknown-linux-musl"
-      sha256 "c810980d7ba089df08cbfd0f6349cdcd4c8c1760bd6cf0415ee214791f577f9a"
+      sha256 "13d135908e08b3f3a9f21429d99b7e0ece1f7be7d31a08df22c017f171bb38cb"
     end
     on_intel do
       url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-x86_64-unknown-linux-musl"
-      sha256 "dc9324658b32f3e4609782d5336c3ee445c8a054943277c10745e270e7cfbfdd"
+      sha256 "2d62f790284b0edf8887972ebb3ddc98d01321c22b4c849603c0c798fcf36cac"
     end
   end
 
