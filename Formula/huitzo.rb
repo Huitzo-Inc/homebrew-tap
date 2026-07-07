@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Huitzo Inc. All rights reserved.
+# SPDX-License-Identifier: LicenseRef-Huitzo-Proprietary
+
 class Huitzo < Formula
   desc "Huitzo CLI for developing Intelligence Packs"
   homepage "https://huitzo.ai"
