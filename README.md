@@ -22,8 +22,9 @@ The `huitzo` formula installs the **Huitzo Launcher** -- a lightweight Rust bina
 
 1. Discovers Python 3.11+ on your system
 2. Creates a managed virtual environment at `~/.huitzo/venv/`
-3. Installs the Huitzo CLI from PyPI
-4. Keeps it up to date automatically
+3. Installs the Huitzo CLI from Huitzo's signed release manifest
+4. Keeps the CLI up to date automatically (the launcher binary itself
+   is updated via `brew upgrade huitzo`)
 
 All CLI commands pass through transparently:
 
@@ -69,4 +70,10 @@ huitzo --launcher-bootstrap
 
 - [Huitzo CLI Launcher](https://github.com/Huitzo-Inc/huitzo-launcher) -- Source code and releases
 - [Huitzo Documentation](https://huitzo.ai) -- Platform documentation
-- [Huitzo SDK](https://github.com/Huitzo-Inc/sdk) -- Intelligence Pack SDK
+- [Huitzo Launcher install script](https://github.com/Huitzo-Inc/huitzo-launcher#install) -- the equivalent `curl | sh` install path
+
+## License
+
+Source-available under the **Huitzo Source-Available License** — see
+[LICENSE](LICENSE). "Huitzo" and the Huitzo logo are trademarks of
+Huitzo Inc. — see [TRADEMARKS.md](TRADEMARKS.md).

@@ -1,11 +1,11 @@
 # Copyright (c) 2026 Huitzo Inc. All rights reserved.
-# SPDX-License-Identifier: LicenseRef-Huitzo-Proprietary
+# SPDX-License-Identifier: LicenseRef-Huitzo-Source-Available
 
 class Huitzo < Formula
-  desc "Huitzo CLI for developing Intelligence Packs"
+  desc "Launcher and CLI manager for Huitzo Intelligence Packs"
   homepage "https://huitzo.ai"
   version "0.3.0"
-  license :cannot_represent
+  license :cannot_represent # Huitzo Source-Available License — see LICENSE
 
   on_macos do
     on_arm do
@@ -29,9 +29,29 @@ class Huitzo < Formula
     end
   end
 
+  livecheck do
+    url "https://github.com/Huitzo-Inc/huitzo-launcher"
+    # The launcher repo also publishes cli-v* releases; match launcher tags
+    # only (same invariant the launcher's update.rs enforces).
+    strategy :github_releases
+    regex(/^v(\d+(?:\.\d+)+)$/i)
+  end
+
   def install
     binary = Dir["huitzo-*"].first || "huitzo"
     bin.install binary => "huitzo"
+  end
+
+  def caveats
+    <<~EOS
+      On first run, huitzo asks for install consent (recorded in
+      ~/.huitzo/consent.jsonl) and then bootstraps the Huitzo CLI into
+      ~/.huitzo. Check what is present on your system with:
+        huitzo --launcher-detect --human
+
+      The launcher defers its own updates to Homebrew — update with:
+        brew upgrade huitzo
+    EOS
   end
 
   test do
