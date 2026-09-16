@@ -2,20 +2,14 @@
 # SPDX-License-Identifier: LicenseRef-Huitzo-Source-Available
 
 class Huitzo < Formula
-  desc "Launcher and CLI manager for Huitzo Intelligence Packs"
+  desc "Launcher and CLI manager for Huitzo Intelligence Packs (macOS: Apple Silicon only)"
   homepage "https://huitzo.ai"
   version "0.3.3"
   license :cannot_represent # Huitzo Source-Available License — see LICENSE
 
   on_macos do
-    on_arm do
-      url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-apple-darwin"
-      sha256 "2e3fec38b3fe9bf5eb4a95fae602e561eb3b947170654bc4cc2b5f0b9caeff2e"
-    end
-    on_intel do
-      url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-x86_64-apple-darwin"
-      sha256 "f7d2aa782e224c100e4c2fffa742d8fc9414534fcc88fb5a68ab76795804c0a7"
-    end
+    url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-apple-darwin"
+    sha256 "2e3fec38b3fe9bf5eb4a95fae602e561eb3b947170654bc4cc2b5f0b9caeff2e"
   end
 
   on_linux do
