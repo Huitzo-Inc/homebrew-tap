@@ -24,22 +24,35 @@ TRADEMARKS.md
 
 The formula defines:
 
-- **4 platform binaries**: macOS ARM, macOS Intel, Linux ARM (musl), Linux Intel (musl)
+- **3 platform binaries**: macOS ARM (Apple Silicon only -- Intel macOS is unsupported), Linux ARM (musl), Linux Intel (musl)
 - **SHA256 hashes** for each binary — these are the integrity check; a mismatch blocks install
 - **`livecheck` block** — tells `brew livecheck` how to find new versions. It matches launcher release tags (`v0.3.2`) and explicitly excludes CLI release tags (`cli-v*`) because the launcher's own `update.rs` enforces the same invariant.
 - **`caveats` block** — post-install message shown to the user
 
 ## Release Process
 
-When a new launcher version is released:
+The `version` and `sha256` bump is **automated** — do not hand-edit it.
 
-1. The launcher repo publishes platform binaries to GitHub Releases
-2. Update `version` in `huitzo.rb` to match the new tag
-3. Update all four `sha256` hashes to match the new binaries
-4. Update the `url` lines if the release artifact naming changed
-5. Commit and push — Homebrew users get the update on their next `brew update`
+1. The launcher repo publishes platform binaries to GitHub Releases.
+2. The launcher's `release.yml` workflow runs an `update-tap` job that
+   rewrites `version` and all `sha256` values in this formula from the
+   just-published assets, opens a PR against this repo, and **auto-merges
+   it** — it fails loudly rather than leaving brew serving a stale launcher.
+3. Homebrew users get the update on their next `brew update && brew upgrade
+   huitzo`.
 
-**Why this is manual:** Homebrew requires SHA256 hashes in the formula. These cannot be computed from a CI pipeline without either (a) downloading the binaries in CI (which means the CI has the secret) or (b) having a human verify the hashes. The manual step is the integrity check.
+**Do not hand-edit `version`, `sha256`, or the `url` lines.** A manual edit
+races the automation and can reintroduce exactly the staleness this
+mechanism exists to prevent (see launcher issue #16). The only edits that
+should be made by hand are structural ones: adding or removing a platform
+block, `desc`, `caveats`, or the `livecheck` block.
+
+**Livecheck / update.rs must stay in step.** The `livecheck` regex here
+(`^v(\d+(?:\.\d+)+)$`) and the launcher's own `update.rs` tag filter both
+select `v*` tags and exclude `cli-v*` tags — the same invariant enforced on
+both sides. The current regex matches release tags only; it would **not**
+match a pre-release tag like `v0.3.4-rc1`. Do not publish a pre-release
+launcher tag without revisiting both this regex and `update.rs` together.
 
 ## Testing
 
@@ -57,4 +70,4 @@ brew test huitzo
 - **Don't add a `bottle` block** — this tap distributes pre-built binaries from GitHub Releases, not Homebrew bottles. Adding a bottle block would create a second distribution path that could drift from the launcher releases.
 - **Don't change the `livecheck` regex without updating the launcher** — the launcher's `update.rs` also filters on `v*` tags. If the regex changes, `brew livecheck` and the launcher's self-update could disagree on what the latest version is.
 - **Don't add formulas for other Huitzo tools** — this tap is for the launcher only. The CLI is managed by the launcher itself; other tools have their own distribution channels.
-- **Don't commit without updating all four SHA256 hashes** — a partial update means some platforms get the new version and others get a checksum mismatch (install failure).
+- **Don't hand-edit `version` or `sha256`** — the launcher's `update-tap` job owns those lines; a manual edit races the automation (see Release Process above). If you must touch the formula structurally, update all three `sha256` values together — a partial update means some platforms get the new version and others get a checksum mismatch (install failure).
