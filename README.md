@@ -69,13 +69,13 @@ brew install huitzo
 ```
 
 **Python-related install failure:**
-You don't need Python preinstalled -- the launcher provisions a managed
-CPython via `uv` if none is found. If install still fails on Python, it's
-most likely because your system Python is 3.11 or older: the CLI's release
-feed only publishes `cp312`/`cp313` wheels, so a 3.11-only host with no
-network access to fetch a managed interpreter will fail with a clear error.
-Give the launcher network access so `uv` can provision Python 3.12+, or
-install a newer Python yourself first.
+You don't need Python preinstalled -- if the launcher finds no interpreter
+at all, it provisions a managed CPython via `uv`. But if it finds an
+interpreter that's too old, it refuses rather than provisioning a
+replacement: the CLI's release feed only publishes `cp312`/`cp313` wheels,
+so a host whose only Python is 3.11 or older fails with a clear error
+regardless of network access. Install Python 3.12+ yourself (e.g. `brew
+install python@3.13` on macOS) and re-run.
 
 **Reset the managed environment:**
 ```sh
