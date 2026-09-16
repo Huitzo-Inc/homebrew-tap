@@ -20,9 +20,13 @@ brew uninstall huitzo
 
 The `huitzo` formula installs the **Huitzo Launcher** -- a lightweight Rust binary (~2 MB) that:
 
-1. Discovers Python 3.11+ on your system
+1. Provisions a managed CPython via `uv` (`uv python install`) if no usable
+   Python is already on your system -- you don't need Python preinstalled
 2. Creates a managed virtual environment at `~/.huitzo/venv/`
-3. Installs the Huitzo CLI from Huitzo's signed release manifest
+3. Installs the Huitzo CLI from Huitzo's release manifest (`cli-release.json`);
+   integrity is checked via a SHA-256 published inside that same feed --
+   the manifest itself is **not signed** (Ed25519 signing is tracked
+   separately and not yet implemented)
 4. Keeps the CLI up to date automatically (the launcher binary itself
    is updated via `brew upgrade huitzo`)
 
@@ -39,13 +43,22 @@ huitzo --launcher-version # Launcher binary version
 
 | Formula | Description | Platforms |
 |---------|-------------|-----------|
-| `huitzo` | Huitzo CLI Launcher | macOS (Intel + Apple Silicon), Linux (x86_64 + aarch64) |
+| `huitzo` | Huitzo CLI Launcher | macOS (Apple Silicon only), Linux glibc (x86_64 + aarch64) |
+
+macOS Intel (x86_64) is not supported -- the CLI's release feed publishes no
+`macos-x86_64` wheel. Linux musl/Alpine is not supported either -- the feed
+publishes `manylinux` (glibc) wheels only.
 
 ## Updating
 
 ```sh
 brew update && brew upgrade huitzo
 ```
+
+**Keeping brew current:** this formula's `version` and `sha256` values are
+bumped automatically by the launcher repo's release workflow whenever a new
+launcher version ships -- no manual step is required. `brew update && brew
+upgrade huitzo` is all you need to stay current.
 
 ## Troubleshooting
 
@@ -55,11 +68,14 @@ brew tap Huitzo-Inc/tap
 brew install huitzo
 ```
 
-**Python not found after install:**
-The launcher needs Python 3.11+ on your system. Install it with:
-```sh
-brew install python@3.13
-```
+**Python-related install failure:**
+You don't need Python preinstalled -- the launcher provisions a managed
+CPython via `uv` if none is found. If install still fails on Python, it's
+most likely because your system Python is 3.11 or older: the CLI's release
+feed only publishes `cp312`/`cp313` wheels, so a 3.11-only host with no
+network access to fetch a managed interpreter will fail with a clear error.
+Give the launcher network access so `uv` can provision Python 3.12+, or
+install a newer Python yourself first.
 
 **Reset the managed environment:**
 ```sh
