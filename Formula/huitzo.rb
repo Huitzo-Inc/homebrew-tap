@@ -8,8 +8,10 @@ class Huitzo < Formula
   license :cannot_represent # Huitzo Source-Available License — see LICENSE
 
   on_macos do
-    url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-apple-darwin"
-    sha256 "2e3fec38b3fe9bf5eb4a95fae602e561eb3b947170654bc4cc2b5f0b9caeff2e"
+    on_arm do
+      url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-apple-darwin"
+      sha256 "2e3fec38b3fe9bf5eb4a95fae602e561eb3b947170654bc4cc2b5f0b9caeff2e"
+    end
   end
 
   on_linux do
