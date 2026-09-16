@@ -20,8 +20,9 @@ brew uninstall huitzo
 
 The `huitzo` formula installs the **Huitzo Launcher** -- a lightweight Rust binary (~2 MB) that:
 
-1. Provisions a managed CPython via `uv` (`uv python install`) if no usable
-   Python is already on your system -- you don't need Python preinstalled
+1. Reuses your system Python if it can take a published Huitzo CLI wheel
+   (`cp312`/`cp313`); otherwise provisions a managed CPython via `uv`
+   (`uv python install`) -- you never need to install Python yourself
 2. Creates a managed virtual environment at `~/.huitzo/venv/`
 3. Installs the Huitzo CLI from Huitzo's release manifest (`cli-release.json`);
    integrity is checked via a SHA-256 published inside that same feed --
@@ -69,13 +70,12 @@ brew install huitzo
 ```
 
 **Python-related install failure:**
-You don't need Python preinstalled -- if the launcher finds no interpreter
-at all, it provisions a managed CPython via `uv`. But if it finds an
-interpreter that's too old, it refuses rather than provisioning a
-replacement: the CLI's release feed only publishes `cp312`/`cp313` wheels,
-so a host whose only Python is 3.11 or older fails with a clear error
-regardless of network access. Install Python 3.12+ yourself (e.g. `brew
-install python@3.13` on macOS) and re-run.
+You never need to install Python yourself -- the launcher reuses your
+system Python only if it can take a published Huitzo CLI wheel
+(`cp312`/`cp313`); otherwise, including when no Python is present at all,
+it downloads and provisions a managed CPython via `uv`. A failure here is
+most likely a network or proxy problem preventing that managed-interpreter
+download, not a missing or outdated system Python.
 
 **Reset the managed environment:**
 ```sh
