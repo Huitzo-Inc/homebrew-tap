@@ -4,24 +4,24 @@
 class Huitzo < Formula
   desc "Launcher and CLI manager for Huitzo Intelligence Packs (macOS: Apple Silicon only)"
   homepage "https://huitzo.ai"
-  version "0.3.4"
+  version "0.3.5"
   license :cannot_represent # Huitzo Source-Available License — see LICENSE
 
   on_macos do
     on_arm do
       url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-apple-darwin"
-      sha256 "1b542c363f59ac194ece059ebd748ac4191b560377e114351275b3a78fbee4ad"
+      sha256 "081a414b8f3c26a8373879020660f879a1d83916583f5c12ca6ddc759f4d18cc"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-aarch64-unknown-linux-musl"
-      sha256 "8e6356c4fa781963cb22a3c64719838730e6aae7ca9fe068a54b3aa3db7184c5"
+      sha256 "324c1e92b1a3971486963b0ccd5d295868188d508f81f34709923a941c93c76d"
     end
     on_intel do
       url "https://github.com/Huitzo-Inc/huitzo-launcher/releases/download/v#{version}/huitzo-x86_64-unknown-linux-musl"
-      sha256 "70011351905cc8ddd7a48b2d59b4a77962f1dd17cf01802060b2b7bf9b583c00"
+      sha256 "a9eec2dc785561927e1a8eac4fee5a36d060b475a5b0a58f3ca5a3f89fd72056"
     end
   end
 
